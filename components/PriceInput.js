@@ -1,5 +1,6 @@
 import React from "react";
 import PatchEvent, { set, unset } from "part:@sanity/form-builder/patch-event";
+import { TextInput, Text, Stack } from "@sanity/ui";
 
 function createPatchFrom(value) {
   return PatchEvent.from(value === "" ? unset() : set(Number(value)));
@@ -12,18 +13,20 @@ const formatMoney = Intl.NumberFormat("en-CA", {
 
 export default function PriceInput({ type, value, onChange, inputComponent }) {
   return (
-    <div>
-      <h2>
+    <Stack space={2}>
+      <Text size={3} weight="bold">
         {type.title} - {value ? formatMoney(value / 100) : formatMoney(0)}
-      </h2>
-      <p>{type.description}</p>
-      <input
+      </Text>
+      <Text size={1} muted={true}>
+        {type.description}
+      </Text>
+      <TextInput
         type="number"
         value={value}
         onChange={(e) => onChange(createPatchFrom(e.target.value))}
         ref={inputComponent}
       />
-    </div>
+    </Stack>
   );
 }
 

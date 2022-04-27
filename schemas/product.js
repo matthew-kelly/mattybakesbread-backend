@@ -10,6 +10,7 @@ export default {
       title: "Product Name",
       type: "string",
       description: "Name of the product",
+      validation: (rule) => rule.required(),
     },
     {
       name: "slug",
@@ -19,6 +20,20 @@ export default {
         source: "name",
         maxLength: 100,
       },
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: "subtitle",
+      title: "Product Subtitle",
+      type: "string",
+      description: "Appears under the title.",
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: "description",
+      title: "Product Description",
+      type: "text",
+      description: "Description of the product. Appears under the image",
     },
     {
       name: "price",
@@ -26,6 +41,40 @@ export default {
       type: "number",
       description: "Price of the product in cents",
       inputComponent: PriceInput,
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: "stock",
+      title: "Stock",
+      type: "number",
+      description: "Quantity of product available",
+      validation: (rule) => rule.required(),
+    },
+    // variants - eg. bagels -> x6 or x12
+    {
+      name: "image",
+      title: "Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alt text",
+          options: {
+            isHighlighted: true,
+          },
+        },
+      ],
+      validation: (rule) => rule.required(),
     },
   ],
+  preview: {
+    select: {
+      title: "name",
+      media: "image",
+    },
+  },
 };
