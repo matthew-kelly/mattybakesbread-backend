@@ -6,7 +6,6 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 
 // Import schemas
 import product from "./product";
-import cart from "./cart";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -17,6 +16,5 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     product,
-    cart,
   ]),
 });
