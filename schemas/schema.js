@@ -8,6 +8,7 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 import product from "./product";
 import featured from "./featured";
 import order from "./order";
+import content from "./content";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -20,5 +21,6 @@ export default createSchema({
     featured,
     product,
     order,
+    content,
   ]),
 });
