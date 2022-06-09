@@ -1,3 +1,5 @@
+import { capitalize } from "../helpers/helpers";
+
 export default {
   name: "content",
   title: "Content",
@@ -56,8 +58,15 @@ export default {
   ],
   preview: {
     select: {
+      type: "type",
       title: "link",
       media: "image",
+    },
+    prepare: ({ type, title, media }) => {
+      return {
+        title: `${capitalize(type)} — ${title}`,
+        media: media,
+      };
     },
   },
 };

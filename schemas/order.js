@@ -1,5 +1,8 @@
+import React from "react";
+
 import PaymentInfo from "../components/PaymentInfo";
 import PriceInput from "../components/PriceInput";
+import { capitalize, formatDate } from "../helpers/helpers";
 
 export default {
   name: "order",
@@ -93,10 +96,12 @@ export default {
             select: {
               product: "product.name",
               quantity: "quantity",
+              image: "product.image",
             },
-            prepare: ({ product, quantity }) => {
+            prepare: ({ product, quantity, image }) => {
               return {
                 title: `${product} x${quantity}`,
+                media: image,
               };
             },
           },
@@ -123,6 +128,13 @@ export default {
       title: "Status",
       type: "string",
       initialValue: "pending",
+      options: {
+        list: [
+          { title: "Pending", value: "pending" },
+          { title: "Received", value: "received" },
+          { title: "Complete", value: "complete" },
+        ],
+      },
       validation: (rule) => rule.required(),
     },
     {
@@ -132,4 +144,44 @@ export default {
       inputComponent: PaymentInfo,
     },
   ],
+  preview: {
+    select: {
+      firstName: "firstName",
+      lastName: "lastName",
+      date: "_createdAt",
+      paid: "paid",
+      status: "status",
+    },
+    prepare: ({ firstName, lastName, date, paid, status }) => {
+      const paymentIcon = {
+        pending: "🚫",
+        received: "📬",
+        complete: "✅",
+      };
+      return {
+        title: `${firstName} ${lastName} - ${formatDate(date)}`,
+        subtitle: `${paid ? "Paid" : "Not Paid"} - ${capitalize(status)}`,
+        media: (
+          <div
+            style={{
+              width: "35px",
+              height: "35px",
+              backgroundColor: paid ? "#7af76d" : "#ff8282",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1.5rem",
+              }}
+            >
+              {paymentIcon[status]}
+            </span>
+          </div>
+        ),
+      };
+    },
+  },
 };

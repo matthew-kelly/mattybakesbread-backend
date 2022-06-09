@@ -1,8 +1,22 @@
+import { capitalize } from "../helpers/helpers";
+
 export default {
   name: "featured",
   title: "Featured Products",
   type: "document",
   fields: [
+    {
+      name: "type",
+      title: "Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "Product", value: "product" },
+          { title: "Text", value: "text" },
+        ],
+      },
+      validation: (rule) => rule.required(),
+    },
     {
       name: "product",
       title: "Product",
@@ -13,6 +27,21 @@ export default {
       },
     },
     {
+      name: "title",
+      title: "Title",
+      type: "string",
+    },
+    {
+      name: "link",
+      title: "Link",
+      type: "string",
+    },
+    {
+      name: "linkText",
+      title: "Link Text",
+      type: "string",
+    },
+    {
       name: "blurb",
       title: "Blurb",
       type: "text",
@@ -20,72 +49,24 @@ export default {
   ],
   preview: {
     select: {
-      product: "product.name",
+      type: "type",
+      productName: "product.name",
+      productImage: "product.image",
+      title: "title",
     },
-    prepare: ({ product }) => {
-      return {
-        title: `${product}`,
-      };
+    prepare: ({ type, productName, productImage, title }) => {
+      if (type === "product") {
+        return {
+          title: productName,
+          subtitle: capitalize(type),
+          media: productImage,
+        };
+      } else {
+        return {
+          title: title,
+          subtitle: capitalize(type),
+        };
+      }
     },
   },
 };
-
-// export default {
-//   name: "cart",
-//   title: "Carts",
-//   type: "document",
-//   fields: [
-//     {
-//       name: "contents",
-//       title: "Cart Contents",
-//       type: "array",
-//       of: [
-//         {
-//           name: "cartItem",
-//           title: "Cart Item",
-//           type: "object",
-//           fields: [
-//             {
-//               name: "product",
-//               title: "Product",
-//               type: "reference",
-//               to: [{ type: "product" }],
-//               options: {
-//                 disableNew: true,
-//               },
-//             },
-//             {
-//               name: "quantity",
-//               title: "Quantity",
-//               type: "number",
-//             },
-//           ],
-//           preview: {
-//             select: {
-//               product: "product.name",
-//               quantity: "quantity",
-//             },
-//             prepare: ({ product, quantity }) => {
-//               return {
-//                 title: `${product} x${quantity}`,
-//               };
-//             },
-//           },
-//         },
-//       ],
-//       options: {
-//         sortable: false,
-//       },
-//     },
-//   ],
-//   preview: {
-//     select: {
-//       id: "_id",
-//     },
-//     prepare: ({ id }) => {
-//       return {
-//         title: `Cart ${id}`,
-//       };
-//     },
-//   },
-// };
