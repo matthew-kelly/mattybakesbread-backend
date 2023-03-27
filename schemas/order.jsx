@@ -113,7 +113,9 @@ export default {
       name: "total",
       title: "Total",
       type: "number",
-      inputComponent: PriceInput,
+      components: {
+        input: PriceInput,
+      },
       validation: (rule) => rule.required(),
     },
     {
@@ -141,7 +143,9 @@ export default {
       name: "payment",
       title: "Payment",
       type: "text",
-      inputComponent: PaymentInfo,
+      components: {
+        input: PaymentInfo,
+      },
     },
   ],
   preview: {

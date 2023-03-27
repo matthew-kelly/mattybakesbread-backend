@@ -40,7 +40,10 @@ export default {
       title: "Price",
       type: "number",
       description: "Price of the product in cents",
-      inputComponent: PriceInput,
+      components: {
+        input: PriceInput,
+      },
+
       validation: (rule) => rule.required(),
     },
     {
@@ -63,9 +66,6 @@ export default {
           name: "alt",
           type: "string",
           title: "Alt text",
-          options: {
-            isHighlighted: true,
-          },
         },
       ],
       validation: (rule) => rule.required(),

@@ -29,9 +29,6 @@ export default {
           name: "alt",
           type: "string",
           title: "Alt text",
-          options: {
-            isHighlighted: true,
-          },
         },
       ],
     },

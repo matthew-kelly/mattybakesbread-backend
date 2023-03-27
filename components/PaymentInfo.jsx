@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { TextArea, Stack, Box } from "@sanity/ui";
-import PatchEvent, { set, unset } from "@sanity/form-builder/PatchEvent";
-import FormField from "part:@sanity/components/formfields/default";
+import { set, unset } from "sanity";
 
-export const PaymentInfo = React.forwardRef((props, ref) => {
+export const PaymentInfo = (props) => {
   const {
-    type, // Schema information
-    value, // Current field value
+    value = "", // Current field value
     onChange, // Method to handle patch events
+    elementProps,
   } = props;
 
   function formatJson(str) {
@@ -19,12 +18,12 @@ export const PaymentInfo = React.forwardRef((props, ref) => {
     return JSON.stringify(JSON.parse(str), null, 2);
   }
 
-  const handleChange = React.useCallback(
+  const handleChange = useCallback(
     // useCallback will help with performance
     (event) => {
       const inputValue = formatJson(event.currentTarget.value); // get current value
       // if the value exists, set the data, if not, unset the data
-      onChange(PatchEvent.from(inputValue ? set(inputValue) : unset()));
+      return onChange(inputValue ? set(inputValue) : unset());
     },
     [onChange]
   );
@@ -35,18 +34,16 @@ export const PaymentInfo = React.forwardRef((props, ref) => {
         <pre>{formatJson(value)}</pre>
       </Box>
       <Box>
-        <FormField label={type.title}>
-          <TextArea
-            type="text"
-            value={value || ""}
-            ref={ref}
-            rows="10"
-            onChange={handleChange}
-          />
-        </FormField>
+        <TextArea
+          {...elementProps}
+          type="text"
+          value={value || ""}
+          rows="10"
+          onChange={handleChange}
+        />
       </Box>
     </Stack>
   );
-});
+};
 
 export default PaymentInfo;
