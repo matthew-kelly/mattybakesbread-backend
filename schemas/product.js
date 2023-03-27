@@ -43,7 +43,6 @@ export default {
       components: {
         input: PriceInput,
       },
-
       validation: (rule) => rule.required(),
     },
     {
@@ -66,6 +65,14 @@ export default {
           name: "alt",
           type: "string",
           title: "Alt text",
+        },
+        {
+          name: "display",
+          type: "string",
+          title: "Display on desktop",
+          options: {
+            list: ["vertical", "horizontal", "square"],
+          },
         },
       ],
       validation: (rule) => rule.required(),
