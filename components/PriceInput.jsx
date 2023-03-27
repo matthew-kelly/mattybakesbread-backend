@@ -10,7 +10,9 @@ const formatMoney = Intl.NumberFormat("en-CA", {
 export default function PriceInput({ value, onChange, elementProps }) {
   const handleChange = useCallback(
     (e) =>
-      onChange(e.currentTarget.value ? set(e.currentTarget.value) : unset()),
+      onChange(
+        e.currentTarget.value ? set(parseInt(e.currentTarget.value)) : unset()
+      ),
     [onChange]
   );
   return (
